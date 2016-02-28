@@ -18,3 +18,24 @@ class Person(models.Model):
     
 class Release(models.Model):
     title = models.CharField(max_length=255)
+    release_date = models.DateField(null=True, blank=True)
+    vague_date = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return self.title
+        
+class ReleaseTrack(models.Model):
+    track = models.ForeignKey('Track')
+    release = models.ForeignKey('Release')
+    position = models.CharField(max_length=8, null=True, blank=True)
+    
+    def __unicode__(self):
+        return "%s: %s" % (self.position, self.track)
+        
+class Track(models.Model):
+    title = models.CharField(max_length=255)
+    release = models.ManyToManyField('Release', through='ReleaseTrack')
+    duration = models.CharField(max_length=8, null=True, blank=True)
+    
+    def __unicode__(self):
+        return self.title
