@@ -1,13 +1,16 @@
 from django.contrib import admin
-from music.models import Release, Track, ReleaseTrack, Label, Artist
+from music.models import Release, Track, ReleaseTrack, Label, Artist, Image
 
 class ReleaseTracksInline(admin.StackedInline):
     model = ReleaseTrack
     extra = 0
     
-
+class ReleaseImageInline(admin.StackedInline):
+    model = Image
+    extra = 0
+    
 class ReleaseAdmin(admin.ModelAdmin):
-    inlines = [ReleaseTracksInline,]
+    inlines = [ReleaseTracksInline, ReleaseImageInline]
     list_display = ('title', 'artist_credit', 'catalog_number')
     
 class TrackAdmin(admin.ModelAdmin):

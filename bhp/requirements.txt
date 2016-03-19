@@ -1,6 +1,6 @@
 cffi==1.5.2
 cryptography==1.2.2
--e git+git@github.com:tttallis/discogs_client.git@f7612c893265823a2f911a3d0bafe7e266976af5#egg=discogs_client
+-e git+https://github.com/tttallis/discogs_client.git@f7612c893265823a2f911a3d0bafe7e266976af5#egg=discogs_client
 Django==1.9.2
 django-extensions==1.6.1
 enum34==1.1.2
