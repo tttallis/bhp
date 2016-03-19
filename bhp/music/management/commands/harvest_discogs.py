@@ -5,7 +5,8 @@ from django.db import models
 from datetime import date
 from django.conf import settings
 import urllib
-
+from django.core.files import File
+import os
 
 class Command(BaseCommand):
     help = 'Extract BHP discography data from discogs.com and store it locally.'
@@ -33,6 +34,8 @@ class Command(BaseCommand):
                 )
                 artists.append(artist)
             release.artists.set(artists)
+            
+            
 
             print 'companies', r.companies
             print 'credits', r.credits

@@ -34,6 +34,7 @@ class Release(models.Model):
     label = models.ForeignKey('Label')
     artists = models.ManyToManyField('Artist')
     _artist_credit = models.CharField(max_length=100, blank=True, help_text='Overrides artists')
+    cover_image = models.ImageField(upload_to='covers')
     
     def __unicode__(self):
         return self.title
@@ -61,3 +62,4 @@ class Track(models.Model):
 class Image(models.Model):
     image = models.ImageField(upload_to='imported_images')
     release = models.ForeignKey('Release')
+    
