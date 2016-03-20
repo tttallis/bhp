@@ -113,3 +113,5 @@ STATIC_URL = '/static/'
 DISCOGS_TOKEN = ''
 DISCOGS_LABEL_ID = 193375 # Big Home Productions
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
