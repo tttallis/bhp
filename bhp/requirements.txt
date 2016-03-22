@@ -1,6 +1,6 @@
 cffi==1.5.2
 cryptography==1.2.2
--e git+git@github.com:tttallis/discogs_client.git@395994e255b66f5d30a5e1544b94b120d1d70c81#egg=discogs_client
+-e git+https://github.com/tttallis/discogs_client.git@395994e255b66f5d30a5e1544b94b120d1d70c81#egg=discogs_client
 Django==1.9.2
 django-appconf==1.0.1
 django-autoslug==1.9.3
