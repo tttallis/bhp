@@ -10,8 +10,8 @@
     <h1>{{ artist }}</h1>
     
     <h2>Releases</h2>
-    {% for release in artist.release_set.all %}
-        <div class="row">
+    <div class="row">
+        {% for release in artist.release_set.all %}
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
             {% if release.cover_image %}
@@ -24,6 +24,6 @@
               </div>
             </div>
           </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock content %}
