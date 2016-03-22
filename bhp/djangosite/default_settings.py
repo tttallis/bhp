@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'djangosite',
     'music',
+    'imagekit',
 ]
 
 MIDDLEWARE_CLASSES = [
