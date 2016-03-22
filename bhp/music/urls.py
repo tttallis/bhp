@@ -19,5 +19,7 @@ from music import views
 app_name = 'music'
 
 urlpatterns = [
-    url(r'^$', views.home, name='home'),
+    url(r'^artists/$', views.artists, name='artists'),
+    url(r'^artist/(?P<slug>[\w-]+)/$', views.artist, name='artist'),
+    url(r'^releases/$', views.releases, name='releases'),
 ]

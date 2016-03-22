@@ -1,10 +1,17 @@
 from __future__ import unicode_literals
-
+from autoslug import AutoSlugField
+from django.core.urlresolvers import reverse
 from django.db import models
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
+    slug = AutoSlugField(populate_from='name')
+    class Meta:
+        ordering = ('name',)
     
+    def get_absolute_url(self):
+        return reverse('music:artist', kwargs={'slug': self.slug})
+
     def __unicode__(self):
         return self.name
 
