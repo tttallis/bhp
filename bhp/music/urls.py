@@ -20,6 +20,6 @@ app_name = 'music'
 
 urlpatterns = [
     url(r'^artists/$', views.artists, name='artists'),
-    url(r'^artist/(?P<slug>[\w-]+)/$', views.artist, name='artist'),
+    url(r'^artists/(?P<slug>[\w-]+)/$', views.artist, name='artist'),
     url(r'^releases/$', views.releases, name='releases'),
 ]
