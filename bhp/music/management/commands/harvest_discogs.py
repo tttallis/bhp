@@ -23,9 +23,10 @@ class Command(BaseCommand):
                 title = r.title,
                 vague_date = True,
                 label = label,
-                catalog_number = catalog_no,
-                cover_notes = r.notes or '',
             )
+            release.catalog_number = catalog_no
+            release.cover_notes = r.notes or ''
+            
             if r.year:
                 release.release_date = date(r.year, 1, 1)
             artists = []
@@ -44,25 +45,16 @@ class Command(BaseCommand):
                 Role.objects.create(
                     artist=artist,
                     release=release,
-                    role=c.role,
-                    tracks=c.tracks,
                 )
+                artist.role=c.role
+                artist.tracks=c.tracks
+                artist.save()
             
 
-            print 'companies', r.companies
-            print 'credits', r.credits
             print 'formats', r.formats
-#             print 'id', r.id
-            print 'images', r.images
-            for i in r.images:
-                image = urllib.urlretrieve(i['uri'])
-#             self.poster_frame.save(os.path.basename(metadict.get('thumbnail_url')), File(open(result[0])))
 
             print 'master', r.master
             print 'notes', r.notes
-            print 'status', r.status
-            print 'styles', r.styles
-            print 'thumb', r.thumb
 #            print 'url', r.url
             print 'videos', r.videos
             print
