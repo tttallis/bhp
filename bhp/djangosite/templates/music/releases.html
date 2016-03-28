@@ -11,20 +11,19 @@
     <h2>Releases</h2>
     <div class="row">
         {% for release in releases %}
-          <div class="col-sm-6 col-md-4">
+          <div class="col-md-2">
             <div class="thumbnail">
             {% if release.cover_image %}
-            {% thumbnail '400x400' release.cover_image %}
+            <a href="{{ release.get_absolute_url }}">{% thumbnail '400x400' release.cover_image %}</a>
             {% endif %}
               <div class="caption">
-                <h3>{{ release.title }}</h3>
+                <h3><a href="{{ release.get_absolute_url }}">{{ release.title }}</a></h3>
                 <h4>{% for artist in release.artists.all %}<a href="{{ artist.get_absolute_url }}">{{ artist }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h4>
                 <p>{{ release.release_date.year }}</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
               </div>
             </div>
           </div>
-        {% if forloop.counter|divisibleby:"3" %}</div><div class="row">{% endif %}
+        {% if forloop.counter|divisibleby:"6" %}</div><div class="row">{% endif %}
         {% endfor %}
     </div>
 {% endblock content %}

@@ -45,6 +45,7 @@ class Role(models.Model):
     
 class Release(models.Model):
     title = models.CharField(max_length=255)
+    slug = AutoSlugField(populate_from='title')
     release_date = models.DateField(null=True, blank=True)
     vague_date = models.BooleanField(default=False)
     catalog_number = models.CharField(max_length=100, blank=True)
@@ -55,6 +56,9 @@ class Release(models.Model):
     credits = models.ManyToManyField('Artist', through='Role')
     cover_notes = models.TextField(blank=True)
     
+    class Meta:
+        ordering = ('-release_date',)
+    
     def __unicode__(self):
         return self.title
         
@@ -62,6 +66,9 @@ class Release(models.Model):
     def artist_credit(self):
         return self._artist_credit or ', '.join([artist.name for artist in self.artists.all()])
         
+    def get_absolute_url(self):
+        return reverse('music:release', kwargs={'slug': self.slug})
+
 class ReleaseTrack(models.Model):
     track = models.ForeignKey('Track')
     release = models.ForeignKey('Release')

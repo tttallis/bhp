@@ -13,3 +13,7 @@ def releases(request):
     releases = Release.objects.all()
     return render(request, 'music/releases.html', {'releases': releases})
     
+def release(request, slug):
+    release = get_object_or_404(Release, slug=slug)
+    return render(request, 'music/release.html', {'release': release})
+    
