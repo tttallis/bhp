@@ -1,6 +1,6 @@
 import discogs_client
 from django.core.management.base import BaseCommand
-from music.models import Release, Track, ReleaseTrack, Artist, Label
+from music.models import Release, Track, ReleaseTrack, Artist, Label, Role
 from django.db import models
 from datetime import date
 from django.conf import settings
@@ -24,6 +24,7 @@ class Command(BaseCommand):
                 vague_date = True,
                 label = label,
                 catalog_number = catalog_no,
+                cover_notes = r.notes or '',
             )
             if r.year:
                 release.release_date = date(r.year, 1, 1)
@@ -35,6 +36,17 @@ class Command(BaseCommand):
                 artists.append(artist)
             release.artists.set(artists)
             
+            for c in r.credits:
+                artist, created = Artist.objects.get_or_create(
+                    name = c.name,
+                )
+                print artist
+                Role.objects.create(
+                    artist=artist,
+                    release=release,
+                    role=c.role,
+                    tracks=c.tracks,
+                )
             
 
             print 'companies', r.companies

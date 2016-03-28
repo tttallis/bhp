@@ -5,6 +5,7 @@ from django.db import models
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
+    alpha_name = models.CharField(max_length=255, blank=True)    
     slug = AutoSlugField(populate_from='name')
     class Meta:
         ordering = ('name',)
@@ -31,7 +32,16 @@ class Membership(models.Model):
 
 class Person(models.Model):
     first_name = models.CharField(max_length=255, blank=True)
-    last_name = models.CharField(max_length=255)    
+    last_name = models.CharField(max_length=255)
+    
+class Role(models.Model):
+    artist = models.ForeignKey('Artist', related_name='role_artist') 
+    release = models.ForeignKey('Release', related_name='role_release')
+    role = models.CharField(max_length=255, blank=True)
+    tracks = models.CharField(max_length=255, blank=True)
+    
+    def __unicode__(self):
+        return "%s: %s" % (self.artist, self.role)
     
 class Release(models.Model):
     title = models.CharField(max_length=255)
@@ -39,9 +49,11 @@ class Release(models.Model):
     vague_date = models.BooleanField(default=False)
     catalog_number = models.CharField(max_length=100, blank=True)
     label = models.ForeignKey('Label')
-    artists = models.ManyToManyField('Artist')
+    artists = models.ManyToManyField('Artist', related_name='release_artist')
     _artist_credit = models.CharField(max_length=100, blank=True, help_text='Overrides artists')
     cover_image = models.ImageField(upload_to='covers', blank=True)
+    credits = models.ManyToManyField('Artist', through='Role')
+    cover_notes = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.title
