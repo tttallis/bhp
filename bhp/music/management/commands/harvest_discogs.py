@@ -42,13 +42,13 @@ class Command(BaseCommand):
                     name = c.name,
                 )
                 print artist
-                Role.objects.create(
+                role, created = Role.objects.get_or_create(
                     artist=artist,
                     release=release,
                 )
-                artist.role=c.role
-                artist.tracks=c.tracks
-                artist.save()
+                role.role=c.role
+                role.tracks=c.tracks
+                role.save()
             
 
             print 'formats', r.formats
