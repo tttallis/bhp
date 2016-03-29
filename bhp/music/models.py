@@ -12,7 +12,7 @@ class Artist(models.Model):
     bio = models.TextField(blank=True)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('alpha_name',)
     
     def get_absolute_url(self):
         return reverse('music:artist', kwargs={'slug': self.slug})
