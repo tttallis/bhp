@@ -8,6 +8,7 @@ class Artist(models.Model):
     name = models.CharField(max_length=255)
     alpha_name = models.CharField(max_length=255, blank=True)    
     slug = AutoSlugField(populate_from='name')
+    bio = models.TextField(blank=True)
     class Meta:
         ordering = ('name',)
     
@@ -85,6 +86,8 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     release = models.ManyToManyField('Release', through='ReleaseTrack')
     duration = models.CharField(max_length=8, null=True, blank=True)
+    blurb = models.TextField(blank=True)
+    lyrics = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.title
