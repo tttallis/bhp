@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db import models
+from urllib import quote_plus
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
@@ -58,6 +59,9 @@ class Release(models.Model):
     
     class Meta:
         ordering = ('-release_date',)
+        
+    def quote_plus_title(self):
+        return quote_plus(self.title)
     
     def __unicode__(self):
         return self.title
