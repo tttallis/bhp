@@ -92,6 +92,9 @@ class Track(models.Model):
     lyrics = models.TextField(blank=True)
     soundcloud = EmbedVideoField()
     
+    class Meta:
+        ordering = ('title',)
+    
     def __unicode__(self):
         return self.title
         

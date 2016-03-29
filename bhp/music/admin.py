@@ -23,6 +23,8 @@ class ReleaseAdmin(admin.ModelAdmin):
     list_display = ('title', 'artist_credit', 'catalog_number')
     
 class TrackAdmin(AdminVideoMixin, admin.ModelAdmin):
+#     list_filter = ('artist',)
+    list_display = ('title',)
     inlines = [ReleaseTracksInline, ReleaseYoutubeInline,]
 
 admin.site.register(Release, ReleaseAdmin)
