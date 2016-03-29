@@ -1,5 +1,6 @@
 from django.contrib import admin
 from music.models import Release, Track, ReleaseTrack, Label, Artist, Image, Role, Youtube
+from embed_video.admin import AdminVideoMixin
 
 class ReleaseTracksInline(admin.TabularInline):
     model = ReleaseTrack
@@ -21,7 +22,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     inlines = [ReleaseTracksInline, ReleaseImageInline, RoleInline,]
     list_display = ('title', 'artist_credit', 'catalog_number')
     
-class TrackAdmin(admin.ModelAdmin):
+class TrackAdmin(AdminVideoMixin, admin.ModelAdmin):
     inlines = [ReleaseTracksInline, ReleaseYoutubeInline,]
 
 admin.site.register(Release, ReleaseAdmin)

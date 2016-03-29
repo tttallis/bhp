@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'djangosite',
     'music',
     'imagekit',
+    'embed_video',
 ]
 
 MIDDLEWARE_CLASSES = [

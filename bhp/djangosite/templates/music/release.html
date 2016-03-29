@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load imagekit %}
+{% load imagekit embed_video_tags %}
 
 {% block content %}
     <ol class="breadcrumb">
@@ -9,13 +9,14 @@
     </ol>
     <h1>{{ release.title }}</h1>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <table class="table table-hover">
             {% for t in release.releasetrack_set.all %}
                 <tr>
                     <td>{{ t.position }}</td>
                     <td>{{ t.track.title }}</td>
                     <td><small>{{ t.track.duration }}</small></td>
+                    <td><iframe width="100%" height="20" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/248622672%3Fsecret_token%3Ds-neXCp&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true"></iframe></td>
                 </tr>
             {% endfor %}
             </table>
@@ -27,12 +28,18 @@
             {% endfor %}
             </dl>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             {% if release.cover_image %}
             {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
             {% else %}
             <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
            {% endif %}
+       {% for t in release.track_set.all %}
+            {% for v in t.youtube_set.all %}
+                {% video v.url "400x300" %}
+            {% endfor %}
+        {% endfor %}
+
         </div>
     </div>
 {% endblock content %}

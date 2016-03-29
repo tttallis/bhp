@@ -3,12 +3,14 @@ from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
 from django.db import models
 from urllib import quote_plus
+from embed_video.fields import EmbedVideoField
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
     alpha_name = models.CharField(max_length=255, blank=True)    
     slug = AutoSlugField(populate_from='name')
     bio = models.TextField(blank=True)
+
     class Meta:
         ordering = ('name',)
     
@@ -52,7 +54,7 @@ class Release(models.Model):
     vague_date = models.BooleanField(default=False)
     catalog_number = models.CharField(max_length=100, blank=True)
     label = models.ForeignKey('Label')
-    artists = models.ManyToManyField('Artist', related_name='release_artist')
+    artists = models.ManyToManyField('Artist', related_name='releases')
     _artist_credit = models.CharField(max_length=100, blank=True, help_text='Overrides artists')
     cover_image = models.ImageField(upload_to='covers', blank=True)
     credits = models.ManyToManyField('Artist', through='Role')
@@ -88,6 +90,7 @@ class Track(models.Model):
     duration = models.CharField(max_length=8, null=True, blank=True)
     blurb = models.TextField(blank=True)
     lyrics = models.TextField(blank=True)
+    soundcloud = EmbedVideoField()
     
     def __unicode__(self):
         return self.title
@@ -97,5 +100,5 @@ class Image(models.Model):
     release = models.ForeignKey('Release')
 
 class Youtube(models.Model):
-    url = models.URLField()
+    url = EmbedVideoField()
     track = models.ForeignKey('Track')
