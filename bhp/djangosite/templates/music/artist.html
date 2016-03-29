@@ -15,8 +15,10 @@
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
             {% if release.cover_image %}
-            {% thumbnail '250x250' release.cover_image -- class="img-responsive" %}
-            {% endif %}
+            {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
+            {% else %}
+            <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
+           {% endif %}
               <div class="caption">
                 <h3>{{ release.title }}</h3>
                 <p>{{ release.release_date.year }}</p>

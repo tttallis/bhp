@@ -18,9 +18,20 @@
                 </tr>
             {% endfor %}
             </table>
+            
+            <dl>
+            {% for role in release.role_release.all %}
+                <dt>{{ role.role }}{% if role.tracks %} [{{ role.tracks }}]{% endif %}</dt>
+                <dd><a href="{{ role.artist.get_absolute_url }}">{{ role.artist }}</a></dd>
+            {% endfor %}
+            </dl>
         </div>
         <div class="col-md-6">
-            {% thumbnail '400x400' release.cover_image %}
+            {% if release.cover_image %}
+            {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
+            {% else %}
+            <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
+           {% endif %}
         </div>
     </div>
 {% endblock content %}

@@ -92,4 +92,7 @@ class Track(models.Model):
 class Image(models.Model):
     image = models.ImageField(upload_to='imported_images')
     release = models.ForeignKey('Release')
-    
+
+class Youtube(models.Model):
+    url = models.URLField()
+    track = models.ForeignKey('Track')
