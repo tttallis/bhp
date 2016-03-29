@@ -1,0 +1,16 @@
+{% load imagekit %}
+<div class="col-md-2">
+                {% if role %}<h3>{{ role.role }}:</h3>{% endif %}
+<div class="thumbnail">
+{% if release.cover_image %}
+<a href="{{ release.get_absolute_url }}">{% thumbnail '400x400' release.cover_image -- class="img-responsive" %}</a>
+{% else %}
+<a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
+{% endif %}
+  <div class="caption">
+    <h3><a href="{{ release.get_absolute_url }}">{{ release.title }}</a></h3>
+    <h4>{% for artist in release.artists.all %}<a href="{{ artist.get_absolute_url }}">{{ artist }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h4>
+    <p>{{ release.release_date.year }}</p>
+  </div>
+</div>
+</div>
