@@ -6,7 +6,11 @@
     </div>
     <div class="list-group">
     {% for artist in artists %}
-        <a href="{{ artist.get_absolute_url }}" class="list-group-item"><span class="badge">{{ artist.release_set.count }}</span>{{ artist }}</a>
+        {% if artist.proper_artist %}
+            <a href="{{ artist.get_absolute_url }}" class="list-group-item proper-artist"><span class="badge">{{ artist.releases.count }} release{{ artist.releases.count|pluralize }}</span>{{ artist }}</a>
+       {% else %}
+            <a href="{{ artist.get_absolute_url }}" class="list-group-item"><span class="badge">{{ artist.release_set.count }} credit{{ artist.release_set.count|pluralize }}</span>{{ artist }}</a>
+        {% endif %}
     {% endfor %}
     </div>
 

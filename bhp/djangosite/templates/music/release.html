@@ -15,7 +15,7 @@
             {% endfor %}
             </table>
             
-            <dl>
+            <dl class="dl-horizontal">
             {% for role in release.role_release.all %}
                 <dt>{{ role.role }}{% if role.tracks %} [{{ role.tracks }}]{% endif %}</dt>
                 <dd><a href="{{ role.artist.get_absolute_url }}">{{ role.artist }}</a></dd>

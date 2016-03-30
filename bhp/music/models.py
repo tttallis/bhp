@@ -19,6 +19,10 @@ class Artist(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    def proper_artist(self):
+        return bool(self.releases.count())
+    
 
 class Label(models.Model):
     name = models.CharField(max_length=255)
