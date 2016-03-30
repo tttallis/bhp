@@ -4,6 +4,9 @@
 {% block content %}
     <h1>{{ release.title }} <small>by {% for artist in release.artists.all %}<a href="{{ artist.get_absolute_url }}">{{ artist.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</small></h1>
     <div class="row">
+        <div class="blurb col-md-4">
+            {{ release.blurb|linebreaks }}
+        </div>
         <div class="col-md-4">
             <table class="table table-hover">
             {% for t in release.releasetrack_set.all %}
@@ -22,18 +25,21 @@
             {% endfor %}
             </dl>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             {% if release.cover_image %}
-            {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
-            {% else %}
-            <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
-           {% endif %}
-       {% for t in release.track_set.all %}
-            {% for v in t.youtube_set.all %}
-                {% video v.url "400x300" %}
+                {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
+                {% else %}
+                <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {% for t in release.track_set.all %}
+                {% for v in t.youtube_set.all %}
+                    {% video v.url "300x200" %}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-
         </div>
     </div>
 {% endblock content %}
