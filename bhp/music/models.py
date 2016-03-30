@@ -63,6 +63,7 @@ class Release(models.Model):
     cover_image = models.ImageField(upload_to='covers', blank=True)
     credits = models.ManyToManyField('Artist', through='Role')
     cover_notes = models.TextField(blank=True)
+    blurb = models.TextField(blank=True)
     
     class Meta:
         ordering = ('-release_date',)
