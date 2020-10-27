@@ -1,5 +1,5 @@
 cffi==1.5.2
-cryptography==1.2.2
+cryptography==3.2
 -e git+https://github.com/tttallis/discogs_client.git@168c719cdd6ddf0b3fa10d8b569007b9b3faca9f#egg=discogs_client
 Django==1.9.2
 django-appconf==1.0.1
