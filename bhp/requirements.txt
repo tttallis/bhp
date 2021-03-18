@@ -13,7 +13,7 @@ ipaddress==1.0.16
 ndg-httpsclient==0.4.0
 oauthlib==1.0.3
 pilkit==1.1.13
-Pillow==3.1.1
+Pillow==8.1.1
 pyasn1==0.1.9
 pycparser==2.14
 pyOpenSSL==0.15.1
