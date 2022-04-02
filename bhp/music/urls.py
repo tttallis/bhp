@@ -13,15 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import re_path
 from music import views
 
 app_name = 'music'
 
 urlpatterns = [
-#     url(r'^/$', views.home, name='home'),    
-    url(r'^artists/$', views.artists, name='artists'),
-    url(r'^artists/(?P<slug>[\w-]+)/$', views.artist, name='artist'),
-    url(r'^releases/$', views.releases, name='releases'),
-    url(r'^releases/(?P<slug>[\w-]+)/$', views.release, name='release'),
+#     re_path(r'^/$', views.home, name='home'),    
+    re_path(r'^artists/$', views.artists, name='artists'),
+    re_path(r'^artists/(?P<slug>[\w-]+)/$', views.artist, name='artist'),
+    re_path(r'^releases/$', views.releases, name='releases'),
+    re_path(r'^releases/(?P<slug>[\w-]+)/$', views.release, name='release'),
 ]

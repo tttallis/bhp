@@ -15,7 +15,7 @@ import os
 
 # root settings conf. imports local settings and set DEBUG-related flags.
 try:
-    from local_settings import * #the first line of local_settings should be "from default_settings import *", then it can override those settings it sees fit.
+    from .local_settings import * #the first line of local_settings should be "from default_settings import *", then it can override those settings it sees fit.
 except ImportError:
-    from default_settings import *
+    from .default_settings import *
 

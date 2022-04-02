@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 from autoslug import AutoSlugField
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
-from urllib import quote_plus
+from urllib.parse import quote_plus
 from embed_video.fields import EmbedVideoField
 
 class Artist(models.Model):
@@ -22,6 +22,9 @@ class Artist(models.Model):
         
     def proper_artist(self):
         return bool(self.releases.count())
+        
+    def __str__(self):
+        return self.name
     
 
 class Label(models.Model):
@@ -32,8 +35,8 @@ class Label(models.Model):
         return self.name
     
 class Membership(models.Model):
-    artist = models.ForeignKey('Artist')
-    person = models.ForeignKey('Person')
+    artist = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    person = models.ForeignKey('Person', on_delete=models.CASCADE)
     start = models.DateTimeField(null=True, blank=True)
     finish = models.DateTimeField(null=True, blank=True)
     credit_name = models.CharField(max_length=255, blank=True)
@@ -43,8 +46,8 @@ class Person(models.Model):
     last_name = models.CharField(max_length=255)
     
 class Role(models.Model):
-    artist = models.ForeignKey('Artist', related_name='role_artist') 
-    release = models.ForeignKey('Release', related_name='role_release')
+    artist = models.ForeignKey('Artist', related_name='role_artist', on_delete=models.CASCADE) 
+    release = models.ForeignKey('Release', related_name='role_release', on_delete=models.CASCADE)
     role = models.CharField(max_length=255, blank=True)
     tracks = models.CharField(max_length=255, blank=True)
     
@@ -57,7 +60,7 @@ class Release(models.Model):
     release_date = models.DateField(null=True, blank=True)
     vague_date = models.BooleanField(default=False)
     catalog_number = models.CharField(max_length=100, blank=True)
-    label = models.ForeignKey('Label')
+    label = models.ForeignKey('Label', on_delete=models.SET_NULL, null=True)
     artists = models.ManyToManyField('Artist', related_name='releases')
     _artist_credit = models.CharField(max_length=100, blank=True, help_text='Overrides artists')
     cover_image = models.ImageField(upload_to='covers', blank=True)
@@ -82,8 +85,8 @@ class Release(models.Model):
         return reverse('music:release', kwargs={'slug': self.slug})
 
 class ReleaseTrack(models.Model):
-    track = models.ForeignKey('Track')
-    release = models.ForeignKey('Release')
+    track = models.ForeignKey('Track', on_delete=models.CASCADE)
+    release = models.ForeignKey('Release', on_delete=models.CASCADE)
     position = models.CharField(max_length=8, null=True, blank=True)
     
     def __unicode__(self):
@@ -95,7 +98,7 @@ class Track(models.Model):
     duration = models.CharField(max_length=8, null=True, blank=True)
     blurb = models.TextField(blank=True)
     lyrics = models.TextField(blank=True)
-    soundcloud = EmbedVideoField()
+    soundcloud = EmbedVideoField(blank=True)
     
     class Meta:
         ordering = ('title',)
@@ -105,8 +108,8 @@ class Track(models.Model):
         
 class Image(models.Model):
     image = models.ImageField(upload_to='imported_images')
-    release = models.ForeignKey('Release')
+    release = models.ForeignKey('Release', on_delete=models.CASCADE)
 
 class Youtube(models.Model):
     url = EmbedVideoField()
-    track = models.ForeignKey('Track')
+    track = models.ForeignKey('Track', on_delete=models.CASCADE)
