@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Lobster|Roboto:700,300,300italic' rel='stylesheet' type='text/css'>
 <style>
-    body {font-family: 'Roboto', sans-serif;}
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
     h1 {font-family: 'Lobster', cursive;}
     h2 {font-family: 'Lobster', cursive;}
     h3 {font-family: 'Lobster', cursive;}
@@ -16,6 +18,20 @@
     .navbar-brand {font-family: 'Roboto', sans-serif; font-weight: bold;}
     dt {font-weight: 300;}
     dd {font-weight: 700;}
+    body {
+    }
+    
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
 </style>    
     
      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -43,8 +59,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/music/releases/">Releases <span class="sr-only">(current)</span></a></li>
-        <li><a href="/music/artists/">Artists</a></li>
+        <li class="active"><a href="/releases/">Releases <span class="sr-only">(current)</span></a></li>
+        <li><a href="/artists/">Artists</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
           <ul class="dropdown-menu">

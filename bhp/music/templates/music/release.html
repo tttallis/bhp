@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load imagekit embed_video_tags %}
+{% load imagekit %}
+{% load embed_video_tags %}
 
 {% block content %}
     <h1>{{ release.title }} <small>by {% for artist in release.artists.all %}<a href="{{ artist.get_absolute_url }}">{{ artist.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</small></h1>
@@ -29,7 +30,7 @@
             {% if release.cover_image %}
                 {% thumbnail '400x400' release.cover_image -- class="img-responsive" %}
                 {% else %}
-                <a href="{{ release.get_absolute_url }}"><img src="http://placehold.it/400?text={{ release.quote_plus_title}}" class="img-responsive" /></a>
+                <a href="{{ release.get_absolute_url }}"><img src="" class="img-responsive" /></a>
             {% endif %}
         </div>
     </div>

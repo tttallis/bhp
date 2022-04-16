@@ -7,75 +7,28 @@ from django.conf import settings
 import urllib
 from django.core.files import File
 import os
+from rich import inspect
+
 
 class Command(BaseCommand):
-    help = 'Extract BHP discography data from discogs.com and store it locally.'
+    help = "Extract BHP discography data from discogs.com and store it locally."
 
     def handle(self, *args, **options):
-        d = discogs_client.Client('BigHomeProductionBot/0.1', user_token=settings.DISCOGS_TOKEN)
+        d = discogs_client.Client(
+            "BigHomeProductionBot/0.1", user_token=settings.DISCOGS_TOKEN
+        )
         l = d.label(settings.DISCOGS_LABEL_ID)
         label, created = Label.objects.get_or_create(
-            name = l.name, # who said I was pedantic?
+            name=l.name,  # who said I was pedantic?
         )
-        for r in l.releases.page(1): # paging - how do?
-            catalog_no = r.labels[0].catno
+        for r in l.releases.page(1):  # paging - how do?
+
+            inspect(r)
+            catalog_no = r.data["catno"]
             release, created = Release.objects.get_or_create(
-                title = r.title,
-                vague_date = True,
-                label = label,
+                title=r.data["title"],
+                vague_date=True,
+                label=label,
             )
-            release.catalog_number = catalog_no
-            release.cover_notes = r.notes or ''
-            
-            if r.year:
-                release.release_date = date(r.year, 1, 1)
-            artists = []
-            for a in r.artists:
-                artist, created = Artist.objects.get_or_create(
-                    name = a.name,
-                )
-                artists.append(artist)
-            release.artists.set(artists)
-            
-            for c in r.credits:
-                artist, created = Artist.objects.get_or_create(
-                    name = c.name,
-                )
-                print artist
-                role, created = Role.objects.get_or_create(
-                    artist=artist,
-                    release=release,
-                )
-                role.role=c.role
-                role.tracks=c.tracks
-                role.save()
-            
-
-            print 'formats', r.formats
-
-            print 'master', r.master
-            print 'notes', r.notes
-#            print 'url', r.url
-            print 'videos', r.videos
-            print
-            print 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-
-
-
+            print(title)
             release.save()
-            for t in r.tracklist:
-                track, created = Track.objects.get_or_create(
-                    title = t.title,
-                    defaults = {'duration': t.duration},
-                )
-                track.save()
-                reltrack, created = ReleaseTrack.objects.get_or_create(
-                    track = track,
-                    release = release,
-                    position = t.position,
-                )
-                reltrack.save()
-                if t.artists:
-                    print 'unstored track artists data', track, t.artists
-                if t.credits:
-                    print 'unstored track credits data', track, t.credits

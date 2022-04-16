@@ -13,14 +13,31 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.urls import re_path, include, path
+from django.urls import include, path
+from django_distill import distill_path, distill_re_path
 from django.contrib import admin
-from bhp.views import home
+from music.views import home
 from django.conf import settings
 from django.conf.urls.static import static
 
+from music import views
+from music.models import Artist, Release
+
+def get_index():
+    return None
+
+def get_all_artists():
+    return list(Artist.objects.values_list('slug', flat=True))
+
+def get_all_releases():
+    return list(Release.objects.values_list('slug', flat=True))
+    
 urlpatterns = [
-    path(r'', home),
     path('admin/', admin.site.urls),
-    path('music/', include('music.urls')),
+    distill_path('', views.home, name='home'),    
+    distill_re_path(r'^artists/$', views.artists, name='artists', distill_func=get_index),
+    distill_re_path(r'^artists/(?P<slug>[\w-]+)/$', views.artist, name='artist', distill_func=get_all_artists),
+    distill_re_path(r'^releases/$', views.releases, name='releases', distill_func=get_index),
+    distill_re_path(r'^releases/(?P<slug>[\w-]+)/$', views.release, name='release', distill_func=get_all_releases),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

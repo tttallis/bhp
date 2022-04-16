@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path, PurePath
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +30,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+load_dotenv()  # take environment variables from .env.
+DISCOGS_TOKEN = os.getenv('DISCOGS_TOKEN')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'music',
+    'imagekit',
+    'embed_video',
+    'django_distill',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # MEDIA_URL = '/media/'
 
-DISCOGS_TOKEN = ''
 DISCOGS_LABEL_ID = 193375 # Big Home Productions
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+MEDIA_ROOT = PurePath(BASE_DIR, "media/")
+STATIC_ROOT = PurePath(BASE_DIR, "static/")
