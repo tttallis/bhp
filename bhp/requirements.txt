@@ -3,7 +3,7 @@ django-autoslug==1.9.8
 django-embed-video==1.4.2
 django-extensions==3.1.5
 django-imagekit==4.1.0
-Pillow==9.1.0
+Pillow==9.1.1
 python3-discogs-client==2.3.14
 rich==12.2.0
 django-distill==2.9.2
